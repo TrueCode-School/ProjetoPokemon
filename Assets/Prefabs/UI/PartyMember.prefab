@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.93333334, g: 0.89411765, b: 0.6901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -405,9 +405,9 @@ MonoBehaviour:
   levelText: {fileID: 7665785482800290874}
   hpText: {fileID: 2714598758688705958}
   hpBar: {fileID: 8494588268768590416}
-  selector: {fileID: 0}
-  highlightColor: {r: 0, g: 0, b: 0, a: 0}
-  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  selector: {fileID: 316567490007118546}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  normalColor: {r: 0.93333334, g: 0.89411765, b: 0.6901961, a: 1}
 --- !u!1 &4551825394214033394
 GameObject:
   m_ObjectHideFlags: 0
