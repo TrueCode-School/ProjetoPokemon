@@ -406,6 +406,7 @@ MonoBehaviour:
   hpText: {fileID: 2714598758688705958}
   hpBar: {fileID: 8494588268768590416}
   selector: {fileID: 316567490007118546}
+  imageMember: {fileID: 8613998808143869024}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
   normalColor: {r: 0.93333334, g: 0.89411765, b: 0.6901961, a: 1}
 --- !u!1 &4551825394214033394

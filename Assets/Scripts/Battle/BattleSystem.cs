@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy}
+public enum BattleState { Start, PlayerAction, PlayerMove, EnemyMove, Busy, PartyScreen}
 
 public class BattleSystem : MonoBehaviour
 {
@@ -13,12 +13,14 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleHud playerHud;
     [SerializeField] BattleDialogBox dialogBox;
+    [SerializeField] PartyScreen partyScreen;
 
     public event Action<bool> OnBattleOver;
 
     BattleState state;
     int currentAction;
     int currentMove;
+    int currentMember;
 
     PokemonParty playerParty;
     Pokemon wildPokemon;
@@ -39,6 +41,8 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.Setup(wildPokemon);
         playerHud.SetData(playerUnit.Pokemon);
         enemyHud.SetData(enemyUnit.Pokemon);
+
+        partyScreen.Init();
 
         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
 
@@ -63,6 +67,14 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
+    }
+
+    void PartyScreen()
+    {
+        state = BattleState.PartyScreen;
+        partyScreen.SetPartyData(playerParty.Pokemons);
+        partyScreen.gameObject.SetActive(true);
+
     }
 
     IEnumerator PerformPlayerMove()
@@ -218,6 +230,10 @@ public class BattleSystem : MonoBehaviour
             {
                 PlayerMove();
             }
+            if (currentAction == 1)
+            {
+                PartyScreen();
+            }
         }
 
     }
@@ -262,4 +278,29 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    void HandlePartySelection()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentMember == 2)
+            {
+                currentMember = 2;
+            }
+            else if (currentMember >= 0 && currentMember < 5)
+            {
+                currentMember++;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (currentMember == 3)
+            {
+                currentMember = 3;
+            }
+            else if (currentMember > 0 && currentMember <= 5)
+            {
+                currentMember--;
+            }
+        }
+    }
 }

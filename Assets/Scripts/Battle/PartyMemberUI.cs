@@ -10,6 +10,7 @@ public class PartyMemberUI : MonoBehaviour
     [SerializeField] Text hpText;
     [SerializeField] HpBar hpBar;
     [SerializeField] Image selector;
+    [SerializeField] Image imageMember;
 
     [SerializeField] Color highlightColor;
     [SerializeField] Color normalColor;
@@ -19,6 +20,7 @@ public class PartyMemberUI : MonoBehaviour
     public void SetData(Pokemon pokemon)
     {
         _pokemon = pokemon;
+        imageMember.sprite = pokemon.Base.FrontSprite;
         nameText.text = pokemon.Base.Name;
         levelText.text = $"Lvl {pokemon.Level}";
         hpText.text = pokemon.HP.ToString();
