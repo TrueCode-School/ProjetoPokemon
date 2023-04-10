@@ -187,6 +187,10 @@ public class BattleSystem : MonoBehaviour
         {
             HandleMoveSelection();
         }
+        if(state == BattleState.PartyScreen)
+        {
+            HandlePartySelection();
+        }
     }
 
     void HandleActionSelection()
@@ -282,25 +286,36 @@ public class BattleSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (currentMember == 2)
-            {
-                currentMember = 2;
-            }
-            else if (currentMember >= 0 && currentMember < 5)
+            if (currentMember >= 0 && currentMember < playerParty.Pokemons.Count - 1)
             {
                 currentMember++;
             }
+
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (currentMember == 3)
-            {
-                currentMember = 3;
-            }
-            else if (currentMember > 0 && currentMember <= 5)
+            if (currentMember > 0)
             {
                 currentMember--;
             }
+
         }
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if(currentMember < 3)
+            {
+                currentMember += 3;
+            }
+            
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if(currentMember > 2)
+            {
+                currentMember -= 3;
+            }
+        }
+        partyScreen.updateMemberSelection(currentMember);
+        
     }
 }
