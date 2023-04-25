@@ -29,6 +29,7 @@ public class PartyScreen : MonoBehaviour
             }
 
         }
+        messageText.text = "Choose a Pokemon";
     }
 
     public void updateMemberSelection(int selectedMember)
@@ -44,5 +45,10 @@ public class PartyScreen : MonoBehaviour
                 memberSlots[i].SetSelected(false);
             }
         }
+    }
+
+    public void SetMessageText(string message)
+    {
+        messageText.text = message;
     }
 }

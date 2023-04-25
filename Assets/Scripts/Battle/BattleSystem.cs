@@ -25,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     PokemonParty playerParty;
     Pokemon wildPokemon;
 
+
     #endregion
 
     // Start is called before the first frame update
@@ -284,7 +285,7 @@ public class BattleSystem : MonoBehaviour
 
     void HandlePartySelection()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if(Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (currentMember >= 0 && currentMember < playerParty.Pokemons.Count - 1)
             {
@@ -292,7 +293,7 @@ public class BattleSystem : MonoBehaviour
             }
 
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (currentMember > 0)
             {
@@ -308,7 +309,7 @@ public class BattleSystem : MonoBehaviour
             }
             
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if(currentMember > 2)
             {
@@ -316,6 +317,48 @@ public class BattleSystem : MonoBehaviour
             }
         }
         partyScreen.updateMemberSelection(currentMember);
+
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            var selectedMember = playerParty.Pokemons[currentMember];
+            if(selectedMember.HP <= 0)
+            {
+                partyScreen.SetMessageText($"{selectedMember.Base.Name} is fainted");
+                return;
+            }
+            if(selectedMember == playerUnit.Pokemon)
+            {
+                partyScreen.SetMessageText($"{selectedMember.Base.Name} is already in combat!");
+                return;
+            }
+
+            partyScreen.gameObject.SetActive(false);
+            state = BattleState.Busy;
+            StartCoroutine(SwitchPokemon(selectedMember));
+
+           
+        }
+
+        else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            partyScreen.gameObject.SetActive(false);
+            PlayerAction();
+        }
         
+    }
+
+    IEnumerator SwitchPokemon(Pokemon newPokemon)
+    {
+        yield return dialogBox.TypeDialog($"Come back {playerUnit.Pokemon.Base.Name}");
+        playerUnit.PlayFaintAnimation();
+        yield return new WaitForSeconds(1.5f);
+
+        playerUnit.Setup(newPokemon);
+        playerHud.SetData(newPokemon);
+        dialogBox.SetMoveNames(newPokemon.Moves);
+
+        yield return dialogBox.TypeDialog($"Go {newPokemon.Base.Name}");
+
+        StartCoroutine(EnemyMove());
     }
 }
